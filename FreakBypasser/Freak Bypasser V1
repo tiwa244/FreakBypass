@@ -61,7 +61,7 @@ local UICornerToggleBtn = Instance.new("UICorner")
 local UICornerClear = Instance.new("UICorner")
 local UICornerUndo = Instance.new("UICorner")
 
-gui.Name = "GazerGui"
+gui.Name = "FreakGui"
 gui.Parent = cloneref(game:GetService("CoreGui")) or game:GetService("CoreGui") 
 
 
@@ -69,7 +69,7 @@ FreakMain.Size = UDim2.new(0.5, 0, 0.5, 0)
 FreakMain.Position = UDim2.new(0.25, 0, 0.25, 0)
 FreakMain.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 FreakMain.BorderColor3 = Color3.fromRGB(60, 60, 60)
-FreakyMain.BorderSizePixel = 1
+FreakMain.BorderSizePixel = 1
 FreakMain.Active = true
 FreakMain.Draggable = true
 FreakMain.Parent = gui
