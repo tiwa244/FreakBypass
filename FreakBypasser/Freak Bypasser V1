@@ -1,3 +1,52 @@
+-- Create UI
+local StarterGui = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
+local gui = Instance.new("ScreenGui", StarterGui)
+gui.Name = "NoticeUI"
+gui.ResetOnSpawn = false
+
+local UIcoren = Instance.new("UICorner")
+local textLabel = Instance.new("TextLabel", gui)
+UIcoren.Parent = textLabel
+textLabel.Size = UDim2.new(0.5, 0, 0.07, 0)
+textLabel.Position = UDim2.new(0.25, 0, 0.05, 0)
+textLabel.BackgroundTransparency = 0.3
+textLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+textLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+textLabel.Font = Enum.Font.SourceSansBold
+textLabel.TextScaled = true
+textLabel.Text = "Loading Freaky Bypasser"
+textLabel.Visible = false
+
+-- Function to show a notice
+function ShowNotice(msg)
+    textLabel.Text = msg
+    textLabel.Visible = true
+    textLabel.TextTransparency = 1
+    textLabel.BackgroundTransparency = 1
+
+    -- Fade in
+    for i = 1, 10 do
+        textLabel.TextTransparency = 1 - i * 0.1
+        textLabel.BackgroundTransparency = 1 - i * 0.07
+        task.wait(0.02)
+    end
+
+    wait(3) -- stay on screen
+
+    -- Fade out
+    for i = 1, 10 do
+        textLabel.TextTransparency = i * 0.1
+        textLabel.BackgroundTransparency = i * 0.07
+        task.wait(0.02)
+    end
+
+    textLabel.Visible = false
+end
+
+-- EXAMPLE USAGE
+ShowNotice("Loading Freaky Bypasser")
+
+
 if not game:IsLoaded() then
     game.Loaded:Wait()
 end
@@ -12,7 +61,7 @@ function makeMessage(message)
             {
                 Text = msg,
                 Color = Color3.fromRGB(255, 89, 98),
-                Font = Enum.Font.GothamMedium,
+                Font = Enum.Font.Oswald,
                 FontSize = 16
             }
         )
@@ -48,7 +97,9 @@ local FreakIcon = Instance.new("ImageLabel")
 local toggleScrollFrameBtn = Instance.new("TextButton") 
 local scrollFrame = Instance.new("ScrollingFrame") 
 local UICornerToggleBtn = Instance.new("UICorner")
+local UICorn = Instance.new("UICorner")
 
+UICorn.Parent = FreakMain
 gui.Name = "FreakGui"
 gui.Parent = cloneref(game:GetService("CoreGui")) or game:GetService("CoreGui") 
 
@@ -624,3 +675,5 @@ chat.MouseButton1Click:Connect(function()
         chat.BackgroundColor3 = Color3.fromRGB(50, 50, 50) 
     end)
 end)
+
+⬇
