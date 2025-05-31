@@ -2,6 +2,9 @@ local TweenService = game:GetService("TweenService")
 local Player = game.Players.LocalPlayer
 local PlayerGui = Player:WaitForChild("PlayerGui")
 
+-- Avoid spam
+if PlayerGui:FindFirstChild("FreakUI") then return end
+
 -- UI Setup
 local FreakUI = Instance.new("ScreenGui")
 FreakUI.Name = "FreakUI"
@@ -9,24 +12,23 @@ FreakUI.IgnoreGuiInset = true
 FreakUI.ResetOnSpawn = false
 FreakUI.Parent = PlayerGui
 
--- Base Message
+-- Base Text
 local baseText = "Loading Freaky Bypasser V1"
 
--- Temporary label to get text size
+-- Measure Text
 local tempLabel = Instance.new("TextLabel")
 tempLabel.Size = UDim2.new(0, 0, 0, 0)
 tempLabel.Font = Enum.Font.SourceSansBold
 tempLabel.TextSize = 28
 tempLabel.Text = baseText .. "..."
 tempLabel.Parent = FreakUI
-
 local textSize = tempLabel.TextBounds
 tempLabel:Destroy()
 
 -- Frame Setup
 local Frame = Instance.new("Frame")
 Frame.AnchorPoint = Vector2.new(0.5, 0)
-Frame.Position = UDim2.new(0.5, 0, -0.2, 0) -- offscreen top
+Frame.Position = UDim2.new(0.5, 0, -0.2, 0)
 Frame.Size = UDim2.new(0, textSize.X + 40, 0, textSize.Y + 20)
 Frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 Frame.BackgroundTransparency = 0.2
@@ -53,7 +55,7 @@ TweenService:Create(Frame, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.Easing
 	Position = UDim2.new(0.5, 0, 0.05, 0)
 }):Play()
 
--- Animate Dots Only
+-- Dot Animation
 for i = 1, 3 do
 	Label.Text = baseText .. string.rep(".", i)
 	wait(1)
