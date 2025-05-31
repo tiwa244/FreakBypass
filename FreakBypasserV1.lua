@@ -2,7 +2,11 @@ local TweenService = game:GetService("TweenService")
 local Player = game.Players.LocalPlayer
 local PlayerGui = Player:WaitForChild("PlayerGui")
 
--- Avoid spam
+-- 🔒 Prevent second execution permanently
+if _G.FreakyBypasserRan then return end
+_G.FreakyBypasserRan = true
+
+-- UI already exists? Just in case
 if PlayerGui:FindFirstChild("FreakUI") then return end
 
 -- UI Setup
@@ -15,7 +19,7 @@ FreakUI.Parent = PlayerGui
 -- Base Text
 local baseText = "Loading Freaky Bypasser V1"
 
--- Measure Text
+-- Text measurement (to size UI perfectly)
 local tempLabel = Instance.new("TextLabel")
 tempLabel.Size = UDim2.new(0, 0, 0, 0)
 tempLabel.Font = Enum.Font.SourceSansBold
