@@ -1,52 +1,51 @@
--- Blox Fruits Style Slide Loading UI
+local TweenService = game:GetService("TweenService")
+local Player = game.Players.LocalPlayer
+local PlayerGui = Player:WaitForChild("PlayerGui")
 
-local ScreenGui = Instance.new("ScreenGui")
+-- UI Setup
+local FreakUI = Instance.new("ScreenGui")
+FreakUI.Name = "FreakUI"
+FreakUI.Parent = PlayerGui
+FreakUI.ResetOnSpawn = false
+
+-- Frame
 local Frame = Instance.new("Frame")
-local TextLabel = Instance.new("TextLabel")
-
-ScreenGui.Name = "LoadingUI"
-ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-
-Frame.Name = "MainFrame"
-Frame.Parent = ScreenGui
-Frame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+Frame.Size = UDim2.new(0, 320, 0, 80)
+Frame.Position = UDim2.new(0.5, 0, 0.5, 0) -- Center
+Frame.AnchorPoint = Vector2.new(0.5, 0.5)
+Frame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
 Frame.BorderSizePixel = 0
-Frame.Position = UDim2.new(0.5, -100, 1, 0) -- Start off-screen (bottom)
-Frame.Size = UDim2.new(0, 200, 0, 100)
+Frame.BackgroundTransparency = 0.1
+Frame.Parent = FreakUI
 
-TextLabel.Parent = Frame
-TextLabel.BackgroundTransparency = 1
-TextLabel.Position = UDim2.new(0, 0, 0, 0)
-TextLabel.Size = UDim2.new(1, 0, 1, 0)
-TextLabel.Font = Enum.Font.SourceSansBold
-TextLabel.Text = "Loading Freaky Bypasser Wait."
-TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-TextLabel.TextScaled = true
+-- Label
+local Label = Instance.new("TextLabel")
+Label.Parent = Frame
+Label.BackgroundTransparency = 1
+Label.Size = UDim2.new(1, 0, 1, 0)
+Label.Font = Enum.Font.SourceSansBold
+Label.TextColor3 = Color3.fromRGB(255, 255, 255)
+Label.TextScaled = true
+Label.Text = "Loading FreakBypasserV1. Wait."
 
--- Slide up from bottom to center
-Frame:TweenPosition(
-    UDim2.new(0.5, -100, 0.5, -50),
-    Enum.EasingDirection.Out,
-    Enum.EasingStyle.Back,
-    0.5,
-    true
-)
+-- Slide Up from center slightly
+Frame.Position = UDim2.new(0.5, 0, 0.5, 20) -- Start center + 20px
+local slideIn = TweenService:Create(Frame, TweenInfo.new(0.4, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
+    Position = UDim2.new(0.5, 0, 0.5, 0)
+})
+slideIn:Play()
+slideIn.Completed:Wait()
 
--- Wait a moment
-task.wait(2.5)
+wait(2.3) -- Pause in center
 
--- Slide down back offscreen
-Frame:TweenPosition(
-    UDim2.new(0.5, -100, 1, 0),
-    Enum.EasingDirection.In,
-    Enum.EasingStyle.Quad,
-    0.5,
-    true
-)
+-- Slide back to center+20 (exit)
+local slideOut = TweenService:Create(Frame, TweenInfo.new(0.35, Enum.EasingStyle.Sine, Enum.EasingDirection.In), {
+    Position = UDim2.new(0.5, 0, 0.5, 20)
+})
+slideOut:Play()
+slideOut.Completed:Wait()
 
--- Clean up
-task.wait(5.1)
-ScreenGui:Destroy()
+FreakUI:Destroy()
 
 if not game:IsLoaded() then
     game.Loaded:Wait()
