@@ -2,70 +2,69 @@ local TweenService = game:GetService("TweenService")
 local Player = game.Players.LocalPlayer
 local PlayerGui = Player:WaitForChild("PlayerGui")
 
--- Create ScreenGui
+-- UI Setup
 local FreakUI = Instance.new("ScreenGui")
 FreakUI.Name = "FreakUI"
 FreakUI.IgnoreGuiInset = true
 FreakUI.ResetOnSpawn = false
 FreakUI.Parent = PlayerGui
 
--- Create a temporary TextLabel to get the correct text size
+-- Base Message
+local baseText = "Loading Freaky Bypasser V1"
+
+-- Temporary label to get text size
 local tempLabel = Instance.new("TextLabel")
 tempLabel.Size = UDim2.new(0, 0, 0, 0)
-tempLabel.Font = Enum.Font.GothamBold
-tempLabel.TextSize = 24
-tempLabel.Text = "Loading Freaky Bypasser V1 Wait."
-tempLabel.Visible = false
+tempLabel.Font = Enum.Font.SourceSansBold
+tempLabel.TextSize = 28
+tempLabel.Text = baseText .. "..."
 tempLabel.Parent = FreakUI
-
--- Wait a frame to calculate text bounds
-game:GetService("RunService").RenderStepped:Wait()
 
 local textSize = tempLabel.TextBounds
 tempLabel:Destroy()
 
--- Create the Frame with calculated width
-local padding = 30
-local frameWidth = textSize.X + padding
-local frameHeight = textSize.Y + 20
-
+-- Frame Setup
 local Frame = Instance.new("Frame")
-Frame.Size = UDim2.new(0, frameWidth, 0, frameHeight)
-Frame.Position = UDim2.new(0.5, 0, -0.3, 0)
 Frame.AnchorPoint = Vector2.new(0.5, 0)
-Frame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
-Frame.BackgroundTransparency = 0.1
+Frame.Position = UDim2.new(0.5, 0, -0.2, 0) -- offscreen top
+Frame.Size = UDim2.new(0, textSize.X + 40, 0, textSize.Y + 20)
+Frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Frame.BackgroundTransparency = 0.2
 Frame.BorderSizePixel = 0
 Frame.Parent = FreakUI
 
--- Create Text
+local Corner = Instance.new("UICorner")
+Corner.CornerRadius = UDim.new(0, 12)
+Corner.Parent = Frame
+
+-- Label Setup
 local Label = Instance.new("TextLabel")
 Label.Size = UDim2.new(1, 0, 1, 0)
 Label.BackgroundTransparency = 1
-Label.Text = "Loading Freaky Bypasser V1 Wait."
-Label.Font = Enum.Font.GothamBold
-Label.TextScaled = true
+Label.Font = Enum.Font.SourceSansBold
+Label.TextSize = 28
+Label.TextWrapped = true
 Label.TextColor3 = Color3.fromRGB(255, 255, 255)
+Label.Text = baseText
 Label.Parent = Frame
 
--- Slide In
-local slideIn = TweenService:Create(Frame, TweenInfo.new(0.5, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
-    Position = UDim2.new(0.5, 0, 0.05, 0)
-})
-slideIn:Play()
-slideIn.Completed:Wait()
+-- Tween In
+TweenService:Create(Frame, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+	Position = UDim2.new(0.5, 0, 0.05, 0)
+}):Play()
 
--- Wait
-task.wait(2.5)
+-- Animate Dots Only
+for i = 1, 3 do
+	Label.Text = baseText .. string.rep(".", i)
+	wait(1)
+end
 
--- Slide Out
-local slideOut = TweenService:Create(Frame, TweenInfo.new(0.4, Enum.EasingStyle.Sine, Enum.EasingDirection.In), {
-    Position = UDim2.new(0.5, 0, -0.3, 0)
-})
-slideOut:Play()
-slideOut.Completed:Wait()
+-- Tween Out
+TweenService:Create(Frame, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {
+	Position = UDim2.new(0.5, 0, -0.2, 0)
+}):Play()
 
--- Cleanup
+wait(0.35)
 FreakUI:Destroy()
 
 if not game:IsLoaded() then
