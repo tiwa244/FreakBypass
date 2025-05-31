@@ -1,51 +1,52 @@
--- Create UI
-local StarterGui = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
-local gui = Instance.new("ScreenGui", StarterGui)
-gui.Name = "NoticeUI"
-gui.ResetOnSpawn = false
+-- Blox Fruits Style Slide Loading UI
 
-local UIcoren = Instance.new("UICorner")
-local textLabel = Instance.new("TextLabel", gui)
-UIcoren.Parent = textLabel
-textLabel.Size = UDim2.new(0.5, 0, 0.07, 0)
-textLabel.Position = UDim2.new(0.25, 0, 0.05, 0)
-textLabel.BackgroundTransparency = 0.3
-textLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-textLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-textLabel.Font = Enum.Font.SourceSansBold
-textLabel.TextScaled = true
-textLabel.Text = "Loading Freaky Bypasser"
-textLabel.Visible = false
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local TextLabel = Instance.new("TextLabel")
 
--- Function to show a notice
-function ShowNotice(msg)
-    textLabel.Text = msg
-    textLabel.Visible = true
-    textLabel.TextTransparency = 1
-    textLabel.BackgroundTransparency = 1
+ScreenGui.Name = "LoadingUI"
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 
-    -- Fade in
-    for i = 1, 10 do
-        textLabel.TextTransparency = 1 - i * 0.1
-        textLabel.BackgroundTransparency = 1 - i * 0.07
-        task.wait(0.02)
-    end
+Frame.Name = "MainFrame"
+Frame.Parent = ScreenGui
+Frame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+Frame.BorderSizePixel = 0
+Frame.Position = UDim2.new(0.5, -100, 1, 0) -- Start off-screen (bottom)
+Frame.Size = UDim2.new(0, 200, 0, 100)
 
-    wait(3) -- stay on screen
+TextLabel.Parent = Frame
+TextLabel.BackgroundTransparency = 1
+TextLabel.Position = UDim2.new(0, 0, 0, 0)
+TextLabel.Size = UDim2.new(1, 0, 1, 0)
+TextLabel.Font = Enum.Font.SourceSansBold
+TextLabel.Text = "Loading Freaky Bypasser Wait."
+TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel.TextScaled = true
 
-    -- Fade out
-    for i = 1, 10 do
-        textLabel.TextTransparency = i * 0.1
-        textLabel.BackgroundTransparency = i * 0.07
-        task.wait(0.02)
-    end
+-- Slide up from bottom to center
+Frame:TweenPosition(
+    UDim2.new(0.5, -100, 0.5, -50),
+    Enum.EasingDirection.Out,
+    Enum.EasingStyle.Back,
+    0.5,
+    true
+)
 
-    textLabel.Visible = false
-end
+-- Wait a moment
+task.wait(2.5)
 
--- EXAMPLE USAGE
-ShowNotice("Loading Freaky Bypasser")
+-- Slide down back offscreen
+Frame:TweenPosition(
+    UDim2.new(0.5, -100, 1, 0),
+    Enum.EasingDirection.In,
+    Enum.EasingStyle.Quad,
+    0.5,
+    true
+)
 
+-- Clean up
+task.wait(5.1)
+ScreenGui:Destroy()
 
 if not game:IsLoaded() then
     game.Loaded:Wait()
