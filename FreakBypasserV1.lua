@@ -2,49 +2,70 @@ local TweenService = game:GetService("TweenService")
 local Player = game.Players.LocalPlayer
 local PlayerGui = Player:WaitForChild("PlayerGui")
 
--- UI Setup
+-- Create ScreenGui
 local FreakUI = Instance.new("ScreenGui")
 FreakUI.Name = "FreakUI"
-FreakUI.Parent = PlayerGui
+FreakUI.IgnoreGuiInset = true
 FreakUI.ResetOnSpawn = false
+FreakUI.Parent = PlayerGui
 
--- Frame
+-- Create a temporary TextLabel to get the correct text size
+local tempLabel = Instance.new("TextLabel")
+tempLabel.Size = UDim2.new(0, 0, 0, 0)
+tempLabel.Font = Enum.Font.GothamBold
+tempLabel.TextSize = 24
+tempLabel.Text = "Loading Freaky Bypasser V1 Wait."
+tempLabel.Visible = false
+tempLabel.Parent = FreakUI
+
+-- Wait a frame to calculate text bounds
+game:GetService("RunService").RenderStepped:Wait()
+
+local textSize = tempLabel.TextBounds
+tempLabel:Destroy()
+
+-- Create the Frame with calculated width
+local padding = 30
+local frameWidth = textSize.X + padding
+local frameHeight = textSize.Y + 20
+
 local Frame = Instance.new("Frame")
-Frame.Size = UDim2.new(0, 320, 0, 80)
-Frame.Position = UDim2.new(0.5, 0, 0.5, 0) -- Center
-Frame.AnchorPoint = Vector2.new(0.5, 0.5)
-Frame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-Frame.BorderSizePixel = 0
+Frame.Size = UDim2.new(0, frameWidth, 0, frameHeight)
+Frame.Position = UDim2.new(0.5, 0, -0.3, 0)
+Frame.AnchorPoint = Vector2.new(0.5, 0)
+Frame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
 Frame.BackgroundTransparency = 0.1
+Frame.BorderSizePixel = 0
 Frame.Parent = FreakUI
 
--- Label
+-- Create Text
 local Label = Instance.new("TextLabel")
-Label.Parent = Frame
-Label.BackgroundTransparency = 1
 Label.Size = UDim2.new(1, 0, 1, 0)
-Label.Font = Enum.Font.SourceSansBold
-Label.TextColor3 = Color3.fromRGB(255, 255, 255)
+Label.BackgroundTransparency = 1
+Label.Text = "Loading Freaky Bypasser V1 Wait."
+Label.Font = Enum.Font.GothamBold
 Label.TextScaled = true
-Label.Text = "Loading FreakBypasserV1. Wait."
+Label.TextColor3 = Color3.fromRGB(255, 255, 255)
+Label.Parent = Frame
 
--- Slide Up from center slightly
-Frame.Position = UDim2.new(0.5, 0, 0.5, 20) -- Start center + 20px
-local slideIn = TweenService:Create(Frame, TweenInfo.new(0.4, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
-    Position = UDim2.new(0.5, 0, 0.5, 0)
+-- Slide In
+local slideIn = TweenService:Create(Frame, TweenInfo.new(0.5, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
+    Position = UDim2.new(0.5, 0, 0.05, 0)
 })
 slideIn:Play()
 slideIn.Completed:Wait()
 
-wait(2.3) -- Pause in center
+-- Wait
+task.wait(2.5)
 
--- Slide back to center+20 (exit)
-local slideOut = TweenService:Create(Frame, TweenInfo.new(0.35, Enum.EasingStyle.Sine, Enum.EasingDirection.In), {
-    Position = UDim2.new(0.5, 0, 0.5, 20)
+-- Slide Out
+local slideOut = TweenService:Create(Frame, TweenInfo.new(0.4, Enum.EasingStyle.Sine, Enum.EasingDirection.In), {
+    Position = UDim2.new(0.5, 0, -0.3, 0)
 })
 slideOut:Play()
 slideOut.Completed:Wait()
 
+-- Cleanup
 FreakUI:Destroy()
 
 if not game:IsLoaded() then
