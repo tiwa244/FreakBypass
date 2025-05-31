@@ -675,5 +675,3 @@ chat.MouseButton1Click:Connect(function()
         chat.BackgroundColor3 = Color3.fromRGB(50, 50, 50) 
     end)
 end)
-
-⬇
