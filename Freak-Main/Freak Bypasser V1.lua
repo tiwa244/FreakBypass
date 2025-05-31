@@ -1,51 +1,60 @@
--- Create UI
-local StarterGui = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
-local gui = Instance.new("ScreenGui", StarterGui)
-gui.Name = "NoticeUI"
+-- Blox Fruits-style Notice Animation (Slide in/out)
+local TweenService = game:GetService("TweenService")
+local CoreGui = game:GetService("CoreGui")
+
+-- Create ScreenGui
+local gui = Instance.new("ScreenGui")
+gui.Name = "BF_Notice"
 gui.ResetOnSpawn = false
+gui.Parent = CoreGui
 
-local UIcoren = Instance.new("UICorner")
-local textLabel = Instance.new("TextLabel", gui)
-UIcoren.Parent = textLabel
-textLabel.Size = UDim2.new(0.5, 0, 0.07, 0)
-textLabel.Position = UDim2.new(0.25, 0, 0.05, 0)
-textLabel.BackgroundTransparency = 0.3
-textLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-textLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-textLabel.Font = Enum.Font.SourceSansBold
-textLabel.TextScaled = true
-textLabel.Text = "Loading Freaky Bypasser"
-textLabel.Visible = false
+-- Create Frame
+local notice = Instance.new("Frame")
+notice.Size = UDim2.new(0.4, 0, 0, 50)
+notice.Position = UDim2.new(0.3, 0, -0.2, 0) -- Start off-screen (above)
+notice.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+notice.BorderSizePixel = 0
+notice.BackgroundTransparency = 0
+notice.Parent = gui
+notice.ClipsDescendants = true
+notice.ZIndex = 10
+notice.AnchorPoint = Vector2.new(0.5, 0)
 
--- Function to show a notice
-function ShowNotice(msg)
-    textLabel.Text = msg
-    textLabel.Visible = true
-    textLabel.TextTransparency = 1
-    textLabel.BackgroundTransparency = 1
+-- Add UICorner for style
+local corner = Instance.new("UICorner")
+corner.CornerRadius = UDim.new(0, 8)
+corner.Parent = notice
 
-    -- Fade in
-    for i = 1, 10 do
-        textLabel.TextTransparency = 1 - i * 0.1
-        textLabel.BackgroundTransparency = 1 - i * 0.07
-        task.wait(0.02)
-    end
+-- Add TextLabel
+local text = Instance.new("TextLabel")
+text.Size = UDim2.new(1, 0, 1, 0)
+text.Position = UDim2.new(0, 0, 0, 0)
+text.BackgroundTransparency = 1
+text.Text = "✅ Freak Bypasser V1 Loaded"
+text.Font = Enum.Font.GothamBold
+text.TextColor3 = Color3.fromRGB(255, 255, 255)
+text.TextScaled = true
+text.Parent = notice
 
-    wait(3) -- stay on screen
+-- Slide In
+local tweenIn = TweenService:Create(notice, TweenInfo.new(0.5, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {
+    Position = UDim2.new(0.5, 0, 0.05, 0)
+})
+tweenIn:Play()
 
-    -- Fade out
-    for i = 1, 10 do
-        textLabel.TextTransparency = i * 0.1
-        textLabel.BackgroundTransparency = i * 0.07
-        task.wait(0.02)
-    end
+-- Wait before sliding out
+task.wait(3)
 
-    textLabel.Visible = false
-end
+-- Slide Out
+local tweenOut = TweenService:Create(notice, TweenInfo.new(0.5, Enum.EasingStyle.Quint, Enum.EasingDirection.In), {
+    Position = UDim2.new(0.5, 0, -0.2, 0)
+})
+tweenOut:Play()
 
--- EXAMPLE USAGE
-ShowNotice("Loading Freaky Bypasser")
-
+-- Cleanup after animation
+tweenOut.Completed:Connect(function()
+    gui:Destroy()
+end)
 
 if not game:IsLoaded() then
     game.Loaded:Wait()
