@@ -71,8 +71,7 @@ task.delay(3, function()
 
 	task.delay(0.35, function()
 		FreakUI:Destroy()
-	end)
-end)
+
 
 if not game:IsLoaded() then
     game.Loaded:Wait()
