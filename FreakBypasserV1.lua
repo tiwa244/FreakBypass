@@ -2,10 +2,10 @@ local TweenService = game:GetService("TweenService")
 local Player = game.Players.LocalPlayer
 local PlayerGui = Player:WaitForChild("PlayerGui")
 
--- Block repeat executions
+-- 🔒 Prevent duplicate UI
 if PlayerGui:FindFirstChild("FreakUI") then return end
 
--- UI Setup
+-- Setup
 local FreakUI = Instance.new("ScreenGui")
 FreakUI.Name = "FreakUI"
 FreakUI.IgnoreGuiInset = true
@@ -15,7 +15,7 @@ FreakUI.Parent = PlayerGui
 -- Base Text
 local baseText = "Loading Freaky Bypasser V1"
 
--- Text measurement
+-- Measure text for perfect size
 local tempLabel = Instance.new("TextLabel")
 tempLabel.Size = UDim2.new(0, 0, 0, 0)
 tempLabel.Font = Enum.Font.SourceSansBold
@@ -39,7 +39,7 @@ local Corner = Instance.new("UICorner")
 Corner.CornerRadius = UDim.new(0, 12)
 Corner.Parent = Frame
 
--- Label
+-- TextLabel
 local Label = Instance.new("TextLabel")
 Label.Size = UDim2.new(1, 0, 1, 0)
 Label.BackgroundTransparency = 1
@@ -55,23 +55,19 @@ TweenService:Create(Frame, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.Easing
 	Position = UDim2.new(0.5, 0, 0.05, 0)
 }):Play()
 
--- Dot animation (1 dot per second, 3 times)
-task.spawn(function()
-	for i = 1, 3 do
-		Label.Text = baseText .. string.rep(".", i)
-		task.wait(1)
-	end
-end)
+-- Dot animation (3 seconds)
+for i = 1, 3 do
+	Label.Text = baseText .. string.rep(".", i)
+	wait(1)
+end
 
--- Fade out after 3 seconds
-task.delay(3, function()
-	TweenService:Create(Frame, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {
-		Position = UDim2.new(0.5, 0, -0.2, 0)
-	}):Play()
+-- Tween Out
+TweenService:Create(Frame, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {
+	Position = UDim2.new(0.5, 0, -0.2, 0)
+}):Play()
 
-	task.delay(0.35, function()
-		FreakUI:Destroy()
-
+wait(0.35)
+FreakUI:Destroy()
 
 if not game:IsLoaded() then
     game.Loaded:Wait()
