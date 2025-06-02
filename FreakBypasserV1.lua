@@ -120,41 +120,6 @@ local toggleScrollFrameBtn = Instance.new("TextButton")
 local scrollFrame = Instance.new("ScrollingFrame") 
 local UICornerToggleBtn = Instance.new("UICorner")
 local UICorn = Instance.new("UICorner")
-local CreditFrame = Instance.new("Frame", MainFrame)
-
-CreditFrame.Size = UDim2.new(1, -20, 0, 80)
-CreditFrame.Position = UDim2.new(0, 10, 0, 40)
-CreditFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-CreditFrame.Visible = false
-Instance.new("UICorner", CreditFrame).CornerRadius = UDim.new(0, 6)
-
-local CreditText = Instance.new("TextLabel", CreditFrame)
-CreditText.Size = UDim2.new(1, -10, 1, -10)
-CreditText.Position = UDim2.new(0, 5, 0, 5)
-CreditText.BackgroundTransparency = 1
-CreditText.TextColor3 = Color3.new(1, 1, 1)
-CreditText.TextSize = 14
-CreditText.Font = Enum.Font.SourceSans
-CreditText.TextWrapped = true
-CreditText.Text = "Credit : NotUser_mmlv1 { XCode_Dev }  & Darkness_V38 { Darkness_V38 }  & tiwa_amgh { Zenzer }"
-
--- Credit - Logs Button (styled like example buttons)
-local CreditButton = Instance.new("TextButton", MainFrame)
-CreditButton.Size = UDim2.new(0, 260, 0, 40)
-CreditButton.Position = UDim2.new(0, 20, 1, -50)
-CreditButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-CreditButton.BorderSizePixel = 0
-CreditButton.Text = "Credit - Logs"
-CreditButton.TextColor3 = Color3.new(1, 1, 1)
-CreditButton.TextSize = 16
-CreditButton.Font = Enum.Font.SourceSans
-local btnCorner = Instance.new("UICorner", CreditButton)
-btnCorner.CornerRadius = UDim.new(0, 6)
-
--- Toggle Credit Info
-CreditButton.MouseButton1Click:Connect(function()
-	CreditFrame.Visible = not CreditFrame.Visible
-end)
 
 UICorn.Parent = FreakMain
 gui.Name = "FreakGui"
