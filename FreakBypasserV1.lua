@@ -235,7 +235,7 @@ end
 local buttonLabels = {
     "Freaky Bypass V1, Is What Im Using Right Now",
     "sybau negro💔🥀",
-    "credit to my man notuser_mmlv1 { xcode_dev } & tiwa_amgh { zenzer } & darkness_v38	
+    "credit to my man notuser_mmlv1 { xcode_dev } & tiwa_amgh { zenzer } & darkness_v38",	
     "awh.. damn. 💀",
     "I Know it, Hitler common W",
     "You have no bitches fr bro?",
